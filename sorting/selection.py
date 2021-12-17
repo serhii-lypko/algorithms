@@ -1,3 +1,5 @@
+import string
+
 # Selection sort is a simple sorting algorithm. 
 # This sorting algorithm is an in-place comparison-based 
 # algorithm in which the list is divided into two parts,
@@ -22,10 +24,57 @@ def selection_sort(arr):
       if arr[k] < arr[min_index]:
         min_index = k
     
-    arr[i], arr[min_index] = arr[min_index], arr[i]
+    if min_index != i:
+      arr[i], arr[min_index] = arr[min_index], arr[i]
 
   return arr
 
-arr = [14, 33, 27, 10, 35, 19, 42, 44];
 
-selection_sort(arr);
+
+# alternate implementation
+def find_smallets_index(arr):
+  smallest_index = 0
+  for i in range(1, len(arr)):
+    if arr[i] < arr[smallest_index]:
+      smallest_index = i
+  return smallest_index
+
+def selection_sort_alternate(arr):
+  newArr = []
+  for i in range(len(arr)):
+    smallest_index = find_smallets_index(arr)
+    # arr.pop modifies the arr in closure
+    newArr.append(arr.pop(smallest_index))
+  return newArr
+
+
+
+# sort names alphabetically
+alphabet = list(string.ascii_lowercase)
+names = ['Dan', 'Alice', 'Ethan', 'Bob', 'Clark', 'Amanda']
+
+def is_symbol_before(a, b):
+  return alphabet.index(a.lower()) < alphabet.index(b.lower())
+
+def selection_sort_names(names):
+  for i in range(len(names)):
+    min_index = i
+
+    for k in range(i + 1, len(names)):
+      for j in range(len(names[min_index])):
+        # case when len(names[min_index]) < len(names[k]) is not covered
+        if names[min_index][j] == names[k][j]:
+          continue
+        else:
+          is_before = is_symbol_before(names[min_index][j], names[k][j])
+          if not is_before:
+            min_index = k
+          break
+
+    if min_index != i:
+      names[i], names[min_index] = names[min_index], names[i]
+
+  return names
+
+
+print(selection_sort_names(names))

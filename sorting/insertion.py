@@ -1,3 +1,4 @@
+# initial idea assumes comparisons on each pair of elements
 # so it has strategy "pass to begin"
 # on each element initial swap it has kind of wave effect
 def insertion_sort(arr):
